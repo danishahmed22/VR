@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alphabet Learning Game</title>
+    <!-- A-Frame Library -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Sky background -->
+      <a-sky color="#6EBAA7"></a-sky>
+
+      <!-- Camera and Cursor for Interactivity -->
+      <a-camera>
+        <a-cursor
+          color="#FFF"
+          fuse="true"
+          raycaster="objects: .clickable"
+        ></a-cursor>
+      </a-camera>
+
+      <!-- Alphabet Letters as 3D Objects -->
+      <a-entity id="alphabet-container" position="0 1 -3">
+        <!-- Letter A -->
+        <a-box
+          id="letter-A"
+          position="-2 0 0"
+          color="#FF5733"
+          depth="0.5"
+          height="1"
+          width="1"
+          class="clickable"
+          rotation="0 45 0"
+        >
+          <a-text
+            value="A"
+            align="center"
+            color="#FFF"
+            position="0 0.5 0.26"
+          ></a-text>
+        </a-box>
+
+        <!-- Letter B -->
+        <a-box
+          id="letter-B"
+          position="0 0 0"
+          color="#33FF57"
+          depth="0.5"
+          height="1"
+          width="1"
+          class="clickable"
+          rotation="0 45 0"
+        >
+          <a-text
+            value="B"
+            align="center"
+            color="#FFF"
+            position="0 0.5 0.26"
+          ></a-text>
+        </a-box>
+
+        <!-- Letter C -->
+        <a-box
+          id="letter-C"
+          position="2 0 0"
+          color="#3357FF"
+          depth="0.5"
+          height="1"
+          width="1"
+          class="clickable"
+          rotation="0 45 0"
+        >
+          <a-text
+            value="C"
+            align="center"
+            color="#FFF"
+            position="0 0.5 0.26"
+          ></a-text>
+        </a-box>
+      </a-entity>
+
+      <!-- Ground -->
+      <a-plane rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+
+      <!-- Light sources -->
+      <a-light type="ambient" intensity="0.5"></a-light>
+      <a-light type="directional" position="-1 1 0"></a-light>
+
+      <!-- Interactivity Script -->
+      <script>
+        const letters = [
+          { letter: 'A', sound: 'sounds/a-sound.mp3' },
+          { letter: 'B', sound: 'sounds/b-sound.mp3' },
+          { letter: 'C', sound: 'sounds/c-sound.mp3' }
+        ];
+
+        letters.forEach(({ letter, sound }) => {
+          const letterEntity = document.getElementById(`letter-${letter}`);
+          
+          letterEntity.addEventListener('click', () => {
+            const audio = new Audio(sound);
+            audio.play();
+
+            // Animate the letter on click
+            letterEntity.setAttribute(
+              'animation__bounce',
+              'property: position; to: 0 1 0; dur: 500; easing: easeInOutSine; loop: 2; dir: alternate'
+            );
+
+            alert(`You clicked on letter ${letter}!`);
+          });
+        });
+      </script>
+    </a-scene>
+  </body>
+</html>
